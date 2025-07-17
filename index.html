@@ -7,459 +7,321 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
-      --bg-light: #fafafb;
-      --text-light: #222;
-      --bg-dark: #20242f;
-      --text-dark: #f0f0f0;
-      --primary: #007acc;
-      --primary-hover: #0069b3;
-      --card-light: #fff;
-      --card-dark: #2f3642;
-      --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      --transition: all 0.3s ease;
+      --bg-light: #fafafb; --text-light: #222;
+      --bg-dark: #20242f; --text-dark: #f0f0f0;
+      --primary: #007acc; --primary-hover: #0069b3;
+      --card-light: #fff; --card-dark: #2f3642;
+      --shadow: 0 2px 10px rgba(0,0,0,0.1);
+      --transition: all .3s cubic-bezier(.4,2,.65,1.15);
+      --glow: 0 0 8px #007acc99, 0 0 20px #007acc33;
     }
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    body {
-      background: var(--bg-light);
-      color: var(--text-light);
-      transition: var(--transition);
-    }
-    body.dark {
-      background: var(--bg-dark);
-      color: var(--text-dark);
-    }
-    #root {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 2rem 1rem;
-      position: relative;
-    }
-    header {
-      margin-bottom: 2rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid #e0e0e0;
-      /* remove flex since image is gone */
-    }
-    body.dark header {
-      border-bottom: 1px solid #3a3a3a;
-    }
-    .hero h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.2rem;
-      color: var(--primary);
-    }
-    .hero p {
-      font-size: 1.1rem;
-      opacity: 0.9;
-    }
-    #navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 0;
-      position: sticky;
-      top: 0;
-      background: inherit;
-      z-index: 100;
-      margin-bottom: 2rem;
-    }
-    #navbar.scrolled {
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: var(--shadow);
-    }
-    body.dark #navbar.scrolled {
-      background: rgba(32, 36, 47, 0.95);
-    }
-    #logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: var(--primary);
-    }
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-      list-style: none;
-    }
-    .nav-links a {
-      color: inherit;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.2s;
-      position: relative;
-    }
-    .nav-links a:hover, .nav-links a.active {
-      color: var(--primary);
-    }
-    .nav-links a:after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: -4px;
-      left: 0;
-      background: var(--primary);
-      transition: width 0.3s;
-    }
-    .nav-links a:hover:after, .nav-links a.active:after {
-      width: 100%;
-    }
-    .nav-links li:last-child a {
-      background: var(--primary);
-      color: white;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      transition: background 0.3s;
-    }
-    .nav-links li:last-child a:hover {
-      background: var(--primary-hover);
-    }
-    #theme-toggle {
-      position: fixed;
-      top: 1rem;
-      right: 1rem;
-      background: var(--primary);
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-      z-index: 200;
-      transition: background 0.3s, transform 0.2s;
-    }
-    #theme-toggle:hover {
-      background: var(--primary-hover);
-      transform: scale(1.05);
-    }
-    section {
-      margin-bottom: 3rem;
-      padding: 2rem;
-      border-radius: 8px;
-      background: var(--card-light);
-      box-shadow: var(--shadow);
-      transition: var(--transition);
-    }
-    body.dark section {
-      background: var(--card-dark);
-    }
-    section h2 {
-      color: var(--primary);
-      margin-bottom: 1.5rem;
-      font-size: 1.8rem;
-    }
-    section p, section li {
-      line-height: 1.6;
-      margin-bottom: 0.8rem;
-    }
-    #about p {
-      font-size: 1.1rem;
-    }
-    #skills .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-    }
+    * {margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;}
+    html { scroll-behavior: smooth;}
+    body {background:var(--bg-light);color:var(--text-light);transition:var(--transition);}
+    body.dark {background:var(--bg-dark);color:var(--text-dark);}
+    #root {max-width:1200px;margin:0 auto;padding:2rem 1rem;position:relative;}
+    header {margin-bottom:2rem;padding-bottom:1rem;border-bottom:1px solid #e0e0e0;animation:slideInDown 1s cubic-bezier(.4,2,.65,1.15);}
+    body.dark header {border-bottom:1px solid #3a3a3a;}
+    .hero h1 {font-size:2.5rem;margin-bottom:0.2rem;color:var(--primary);}
+    .hero p {font-size:1.1rem;opacity:.9;}
+    .typed {font-size:1.1rem;color:var(--primary);font-weight:500;}
+    #navbar {display:flex;justify-content:center;align-items:center;padding:1rem 0;position:sticky;top:0;z-index:100;margin-bottom:2rem;background:inherit;}
+    #navbar.scrolled {background:rgba(255,255,255,0.95);box-shadow:var(--shadow);}
+    body.dark #navbar.scrolled {background:rgba(32,36,47,0.95);}
+    .nav-links {display:flex;gap:1.5rem;list-style:none;}
+    .nav-links a {color:inherit;text-decoration:none;font-weight:500;transition:color 0.2s;position:relative;}
+    .nav-links a:hover,.nav-links a.active {color:var(--primary);}
+    .nav-links a:after {content:'';position:absolute;width:0;height:2px;bottom:-4px;left:0;background:var(--primary);transition:width 0.3s;}
+    .nav-links a:hover:after,.nav-links a.active:after {width:100%;}
+    .nav-links li:last-child a {background:var(--primary);color:white;padding:0.5rem 1rem;border-radius:4px;transition:background 0.3s;}
+    .nav-links li:last-child a:hover {background:var(--primary-hover);}
+    #theme-toggle {position:fixed;top:1rem;right:1rem;background:var(--primary);color:white;border:none;padding:0.5rem 1rem;border-radius:4px;cursor:pointer;z-index:200;transition:background 0.3s,transform 0.2s;}
+    #theme-toggle:hover {background:var(--primary-hover);transform:scale(1.05);}
+    section {margin-bottom:3rem;padding:2rem;border-radius:8px;background:var(--card-light);box-shadow:var(--shadow);transition:var(--transition);}
+    body.dark section {background:var(--card-dark);}
+    section h2 {color:var(--primary);margin-bottom:1.5rem;font-size:1.8rem;position:relative;display:inline-block;}
+    section h2::before,section h2::after {content:'';position:absolute;top:60%;width:24px;height:6px;opacity:0.3;border-radius:6px;pointer-events:none;}
+    section h2::before {left:-30px;background:linear-gradient(90deg, var(--primary), transparent);filter:blur(2px);}
+    section h2::after {right:-30px;background:linear-gradient(270deg,var(--primary),transparent);filter:blur(2px);}
+    section h2:hover {text-shadow:var(--glow);}
+    section p,section li {line-height:1.6;margin-bottom:0.8rem;}
+    #about p {font-size:1.1rem;}
+    #skills .skills-grid {display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;margin-top:1rem;}
     .skill {
-      background: rgba(0, 122, 204, 0.1);
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      word-break: break-word;
-      white-space: normal;
+      background:rgba(0,122,204,0.1);
+      padding:0.5rem 1rem;
+      border-radius:6px;
+      display:flex;
+      align-items:center;
+      gap:0.6rem;
+      word-break:break-word;
+      white-space:normal;
+      opacity:0;
+      transform:translateY(30px);
+      animation:fadeInUp 1s forwards cubic-bezier(.4,2,.65,1.15);
+      position: relative;
     }
-    body.dark .skill {
-      background: rgba(0, 122, 204, 0.2);
-    }
-    .skill i {
-      color: var(--primary);
-    }
-    .project-filters {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-    }
-    .project-filters button {
-      background: rgba(0, 122, 204, 0.1);
-      color: inherit;
-      border: none;
-      padding: 0.4rem 0.8rem;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-    .project-filters button:hover, .project-filters button.active {
-      background: var(--primary);
-      color: white;
-    }
-    .project-cards {
-      display: grid;
-      gap: 1.5rem;
-    }
-    .project-card {
-      background: rgba(0, 122, 204, 0.05);
-      padding: 1.5rem;
-      border-radius: 8px;
-      transition: var(--transition);
-      border-left: 4px solid var(--primary);
-    }
-    body.dark .project-card {
-      background: rgba(0, 122, 204, 0.1);
-    }
-    .project-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-    }
-    .project-card h3 {
-      color: var(--primary);
-      margin-bottom: 0.5rem;
-    }
-    .card-date {
-      opacity: 0.7;
-      font-size: 0.9rem;
-      margin-bottom: 0.5rem;
-    }
-    .project-card p {
-      margin-bottom: 0.8rem;
-    }
-    .project-techs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 0.8rem;
-    }
-    .project-techs span {
-      background: rgba(0, 122, 204, 0.2);
-      padding: 0.3rem 0.6rem;
-      border-radius: 4px;
-      font-size: 0.8rem;
-    }
-    ul {
-      padding-left: 2rem;
-      margin-top: 0.5rem;
-    }
-    ul li {
-      margin-bottom: 0.6rem;
-    }
-    #contact a, .social-link {
-      color: var(--primary);
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
-    #contact a:hover, .social-link:hover {
-      opacity: 0.8;
-      text-decoration: underline;
-    }
-    .social-links {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-      opacity: 0.7;
-      font-size: 0.9rem;
-    }
+    .skill:hover {background:var(--primary);color:#fff;cursor:pointer;box-shadow:0 3px 14px #007acc33;}
+    body.dark .skill {background:rgba(0,122,204,0.2);}
+    .skill i {color:var(--primary);}
+    .skill:nth-child(1){animation-delay:.12s}.skill:nth-child(2){animation-delay:.22s}.skill:nth-child(3){animation-delay:.32s}.skill:nth-child(4){animation-delay:.42s}.skill:nth-child(5){animation-delay:.52s}.skill:nth-child(6){animation-delay:.62s}.skill:nth-child(7){animation-delay:.72s}.skill:nth-child(8){animation-delay:.82s}.skill:nth-child(9){animation-delay:.92s}.skill:nth-child(10){animation-delay:1.02s}.skill:nth-child(11){animation-delay:1.12s}.skill:nth-child(12){animation-delay:1.22s}.skill:nth-child(13){animation-delay:1.32s}
+    @keyframes fadeInUp {to{opacity:1;transform:translateY(0);}}
+    .project-filters {display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.5rem;animation:slideInLeft 1s cubic-bezier(.4,2,.65,1.15);}
+    @keyframes slideInDown {0%{opacity:0;transform:translateY(-60px);}100%{opacity:1;transform:translateY(0);}}
+    @keyframes slideInLeft {0%{opacity:0;transform:translateX(-40px);}100%{opacity:1;transform:translateX(0);}}
+    .project-filters button {background:rgba(0,122,204,0.1);color:inherit;border:none;padding:0.4rem 0.8rem;border-radius:4px;cursor:pointer;transition:var(--transition);}
+    .project-filters button:hover,.project-filters button.active {background:var(--primary);color:white;}
+    .project-cards {display:grid;gap:1.5rem;}
+    .project-card {background:rgba(0,122,204,0.05);padding:1.5rem;border-radius:8px;transition:var(--transition),box-shadow 0.25s cubic-bezier(.4,2,.65,1.15);border-left:4px solid var(--primary);opacity:0;transform:translateY(40px);animation:fadeInUp 1.2s forwards cubic-bezier(.4,2,.65,1.15);}
+    .project-card:nth-child(1){animation-delay:0.33s;}.project-card:nth-child(2){animation-delay:0.43s;}
+    body.dark .project-card {background:rgba(0,122,204,0.1);}
+    .project-card:hover {transform:scale(1.03) translateY(-4px);box-shadow:0 8px 20px #007acc33;}
+    .project-card h3 {color:var(--primary);margin-bottom:0.5rem;}
+    .card-date {opacity:.7;font-size:0.9rem;margin-bottom:0.5rem;}
+    .project-card p {margin-bottom:0.8rem;}
+    .project-techs {display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.8rem;}
+    .project-techs span {background:rgba(0,122,204,0.2);padding:0.3rem 0.6rem;border-radius:4px;font-size:0.8rem;}
+    ul {padding-left:2rem;margin-top:0.5rem;}
+    ul li {margin-bottom:0.6rem;}
+    #contact a,.social-link {color:var(--primary);text-decoration:none;transition:opacity 0.2s;}
+    #contact a:hover,.social-link:hover {opacity:0.8;text-decoration:underline;}
+    .social-links {display:flex;gap:1rem;margin-top:1rem;animation:fadeInUp 1.2s 1.6s both cubic-bezier(.4,2,.65,1.15);}
+    footer {text-align:center;padding:1rem;margin-top:2rem;opacity:.7;font-size:0.9rem;}
+    #backTop {display:none;position:fixed;bottom:35px;right:25px;z-index:111;background:var(--primary);color:#fff;border:none;
+      box-shadow:0 2px 10px #007acc55;padding:0.7em 1.2em;border-radius:50px;font-size:1.3rem;cursor:pointer;transition:opacity .23s;}
+    #backTop.show {display:block;animation:fadeInUp .4s;}
     @media (max-width: 768px) {
-      #navbar { flex-direction: column; gap: 1rem; }
-      .nav-links { flex-wrap: wrap; justify-content: center; }
-      header { flex-direction: column; text-align: center; }
-      section { padding: 1.5rem; }
-      .skills-grid { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+      #navbar {flex-direction:column;gap:1rem;}
+      .nav-links {flex-wrap:wrap;justify-content:center;}
+      header {flex-direction:column;text-align:center;}
+      section {padding:1.5rem;}
+      .skills-grid {grid-template-columns:repeat(auto-fill,minmax(120px,1fr));}
     }
   </style>
 </head>
 <body>
-  <div id="root">
-    <button id="theme-toggle">🌙 Dark Mode</button>
-
-    <header>
-      <div class="hero">
-        <h1>Pratibha Sharma</h1>
-        <p>AI &amp; Machine Learning Enthusiast | KIIT University</p>
-        <div class="social-links">
-          <a class="social-link" href="https://github.com/pratibha397" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
+<div id="root">
+  <button id="theme-toggle">🌙 Dark Mode</button>
+  <header>
+    <div class="hero">
+      <h1 id="typed-hero"></h1>
+      <p id="typed-desc" class="typed"></p>
+      <div class="social-links">
+        <a class="social-link" href="https://github.com/pratibha397" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i> GitHub</a>
+      </div>
+    </div>
+  </header>
+  <nav id="navbar">
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="resume.pdf" target="_blank">Resume</a></li>
+    </ul>
+  </nav>
+  <section id="about">
+    <h2>About</h2>
+    <p>
+      Highly motivated AI and Machine Learning expert with robust analytical skills and a strong foundation in Data Structures.
+      Seeking to apply my expertise at a dynamic organization to contribute to innovative projects and drive operational efficiency.
+    </p>
+  </section>
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      <div class="skill"><i class="fas fa-code"></i> Java</div>
+      <div class="skill"><i class="fas fa-code"></i> Python</div>
+      <div class="skill"><i class="fas fa-code"></i> C</div>
+      <div class="skill"><i class="fas fa-code"></i> HTML &amp; CSS</div>
+      <div class="skill"><i class="fas fa-database"></i> MySQL</div>
+      <div class="skill"><i class="fas fa-file-excel"></i> Excel</div>
+      <div class="skill"><i class="fab fa-github"></i> GitHub</div>
+      <div class="skill"><i class="fas fa-robot"></i> ML, AI</div>
+      <div class="skill"><i class="fas fa-sitemap"></i> OOPS, DSA</div>
+      <div class="skill"><i class="fas fa-server"></i> OS, CN</div>
+      <div class="skill"><i class="fas fa-users"></i> Leadership</div>
+      <div class="skill"><i class="fas fa-comments"></i> Communication</div>
+      <div class="skill"><i class="fas fa-brain"></i> Logical Thinking</div>
+    </div>
+  </section>
+  <section id="projects">
+    <h2>Projects &amp; Volunteering</h2>
+    <div class="project-filters">
+      <button class="active" data-filter="all">All</button>
+      <button data-filter="Leadership">Leadership</button>
+      <button data-filter="Communication">Communication</button>
+      <button data-filter="Python">Python</button>
+      <button data-filter="ML">ML</button>
+    </div>
+    <div class="project-cards">
+      <div class="project-card" data-tech="Leadership Communication">
+        <h3>Teaching Volunteer</h3>
+        <span class="card-date">May 2022 - June 2022</span>
+        <p>Improved communication skills and learned group work while teaching.</p>
+        <div class="project-techs">
+          <span>Leadership</span>
+          <span>Communication</span>
         </div>
       </div>
-    </header>
-    <nav id="navbar">
-      <div id="logo">PS</div>
-      <ul class="nav-links">
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#education">Education</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#certifications">Certifications</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li><a href="resume.pdf" target="_blank">Resume</a></li>
-      </ul>
-    </nav>
-    <section id="about">
-      <h2>About</h2>
-      <p>
-        Highly motivated AI and Machine Learning expert with robust analytical skills and a strong foundation in Data Structures.
-        Seeking to apply my expertise at a dynamic organization to contribute to innovative projects and drive operational efficiency.
-      </p>
-    </section>
-    <section id="skills">
-      <h2>Skills</h2>
-      <div class="skills-grid">
-        <div class="skill"><i class="fas fa-code"></i> Java</div>
-        <div class="skill"><i class="fas fa-code"></i> Python</div>
-        <div class="skill"><i class="fas fa-code"></i> C</div>
-        <div class="skill"><i class="fas fa-code"></i> HTML &amp; CSS</div>
-        <div class="skill"><i class="fas fa-database"></i> MySQL</div>
-        <div class="skill"><i class="fas fa-file-excel"></i> Excel</div>
-        <div class="skill"><i class="fab fa-github"></i> GitHub</div>
-        <div class="skill"><i class="fas fa-robot"></i> ML, AI</div>
-        <div class="skill"><i class="fas fa-sitemap"></i> OOPS, DSA</div>
-        <div class="skill"><i class="fas fa-server"></i> OS, CN</div>
-        <div class="skill"><i class="fas fa-users"></i> Leadership</div>
-        <div class="skill"><i class="fas fa-comments"></i> Communication</div>
-        <div class="skill"><i class="fas fa-brain"></i> Logical Thinking</div>
-      </div>
-    </section>
-    <section id="projects">
-      <h2>Projects &amp; Volunteering</h2>
-      <div class="project-filters">
-        <button class="active" data-filter="all">All</button>
-        <button data-filter="Leadership">Leadership</button>
-        <button data-filter="Communication">Communication</button>
-        <button data-filter="Python">Python</button>
-        <button data-filter="ML">ML</button>
-      </div>
-      <div class="project-cards">
-        <div class="project-card" data-tech="Leadership Communication">
-          <h3>Teaching Volunteer</h3>
-          <span class="card-date">May 2022 - June 2022</span>
-          <p>Improved communication skills and learned group work while teaching.</p>
-          <div class="project-techs">
-            <span>Leadership</span>
-            <span>Communication</span>
-          </div>
-        </div>
-        <div class="project-card" data-tech="Python ML">
-          <h3>Rating Based Recommendation System</h3>
-          <span class="card-date">Dec 2024 - Apr 2025</span>
-          <p>Built a product recommendation system using review reliability, SVD, and evaluated performance using MSE and hit ratio.</p>
-          <div class="project-techs">
-            <span>Python</span>
-            <span>ML</span>
-            <span>SVD</span>
-          </div>
+      <div class="project-card" data-tech="Python ML">
+        <h3>Rating Based Recommendation System</h3>
+        <span class="card-date">Dec 2024 - Apr 2025</span>
+        <p>Built a product recommendation system using review reliability, SVD, and evaluated performance using MSE and hit ratio.</p>
+        <div class="project-techs">
+          <span>Python</span>
+          <span>ML</span>
+          <span>SVD</span>
         </div>
       </div>
-    </section>
-    <section id="education">
-      <h2>Education</h2>
-      <ul>
-        <li><strong>B.Tech CSE</strong>, KIIT University, Bhubaneswar, India (2022–Present)<br>Current CGPA: 9.47/10</li>
-        <li><strong>Intermediate in Science</strong>, St. Xavier’s College, Maitighar, Kathmandu, Nepal (2020–2022)<br>GPA: 3.46/4.0</li>
-        <li><strong>Secondary Education Examination</strong>, Prabhat English Boarding Secondary School, Nepal (2019–2020)<br>GPA: 4.0/4.0</li>
-      </ul>
-    </section>
-    <section id="experience">
-      <h2>Experience &amp; Achievements</h2>
-      <ul>
-        <li>
-          <strong>Software Development Intern, Nepal Telecom</strong><br>
-          Kathmandu, Nepal (July 2025 – August 2025)<br>
-          Worked on backend development, contributed to automation of internal tools, and gained hands-on experience with enterprise software systems.
-        </li>
-        <li>
-          <strong>SII Scholarship Recipient</strong><br>
-          Fully funded scholarship from the Indian Ministry of Human Resource Development for UG studies at KIIT University.
-        </li>
-      </ul>
-    </section>
-    <section id="certifications">
-      <h2>Certifications</h2>
-      <ul>
-        <li>Machine Learning in Python by IBM</li>
-        <li>Data Analysis in Python by IBM</li>
-        <li>Agile Scrum Master by Simplilearn</li>
-        <li>Problem Solving by HackerRank</li>
-      </ul>
-    </section>
-    <section id="contact">
-      <h2>Contact</h2>
-      <p><i class="fas fa-envelope"></i> <a href="mailto:pratibha.sharmaa123@gmail.com">pratibha.sharmaa123@gmail.com</a></p>
-      <p><i class="fas fa-phone"></i> +91-7817035575 / +977-9849247174</p>
-      <p><i class="fab fa-github"></i> <a class="social-link" href="https://github.com/pratibha397" target="_blank" rel="noopener noreferrer">GitHub Profile</a></p>
-    </section>
-    <footer>
-      &copy; 2025 Pratibha Sharma | Portfolio
-    </footer>
-  </div>
-  <script>
-    // Theme Toggle
-    const themeToggle = document.getElementById('theme-toggle');
-    const body = document.body;
-    themeToggle.addEventListener('click', () => {
-      body.classList.toggle('dark');
-      localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
-      themeToggle.textContent = body.classList.contains('dark') ? '☀️ Light Mode' : '🌙 Dark Mode';
-    });
-    // Check for saved theme
-    if (localStorage.getItem('theme') === 'dark') {
-      body.classList.add('dark');
-      themeToggle.textContent = '☀️ Light Mode';
-    }
-    // Active Nav Link
-    const navLinks = document.querySelectorAll('.nav-links a');
-    const sections = document.querySelectorAll('section');
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        if (pageYOffset >= sectionTop - 150) {
-          current = section.getAttribute('id');
-        }
-      });
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-          link.classList.add('active');
-        }
-      });
-    });
-    // Project Filtering
-    const filterButtons = document.querySelectorAll('.project-filters button');
-    const projectCards = document.querySelectorAll('.project-card');
-    filterButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-        const filter = button.getAttribute('data-filter');
-        projectCards.forEach(card => {
-          const cardTechs = card.getAttribute('data-tech');
-          if (filter === 'all' || cardTechs.includes(filter)) {
-            card.style.display = 'block';
-          } else {
-            card.style.display = 'none';
-          }
-        });
-      });
-    });
-    // Navbar Scrolled Effect
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 10) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
+    </div>
+  </section>
+  <section id="education">
+    <h2>Education</h2>
+    <ul>
+      <li><strong>B.Tech CSE</strong>, KIIT University, Bhubaneswar, India (2022–Present)<br>Current CGPA: 9.46/10</li>
+      <li><strong>Intermediate in Science</strong>, St. Xavier’s College, Maitighar, Kathmandu, Nepal (2020–2022)<br>GPA: 3.46/4.0</li>
+      <li><strong>Secondary Education Examination</strong>, Prabhat English Boarding Secondary School, Nepal (2019–2020)<br>GPA: 4.0/4.0</li>
+    </ul>
+  </section>
+  <section id="experience">
+    <h2>Experience &amp; Achievements</h2>
+    <ul>
+      <li>
+        <strong>Software Development Intern, Nepal Telecom</strong><br>
+        Kathmandu, Nepal (July 2025 – August 2025)<br>
+        Worked on backend development, contributed to automation of internal tools, and gained hands-on experience with enterprise software systems.
+      </li>
+      <li>
+        <strong>SII Scholarship Recipient</strong><br>
+        Fully funded scholarship from the Indian Ministry of Human Resource Development for UG studies at KIIT University.
+      </li>
+    </ul>
+  </section>
+  <section id="certifications">
+    <h2>Certifications</h2>
+    <ul>
+      <li>Machine Learning in Python by IBM</li>
+      <li>Data Analysis in Python by IBM</li>
+      <li>Agile Scrum Master by Simplilearn</li>
+      <li>Problem Solving by HackerRank</li>
+    </ul>
+  </section>
+  <section id="contact">
+    <h2>Contact</h2>
+    <p><i class="fas fa-envelope"></i> <a href="mailto:pratibha.sharmaa123@gmail.com">pratibha.sharmaa123@gmail.com</a></p>
+    <p><i class="fas fa-phone"></i> +91-7817035575 / +977-9849247174</p>
+    <p><i class="fab fa-github"></i> <a class="social-link" href="https://github.com/pratibha397" target="_blank" rel="noopener noreferrer">GitHub Profile</a></p>
+  </section>
+  <footer>
+    &copy; 2025 Pratibha Sharma | Portfolio
+  </footer>
+  <button id="backTop"><i class="fas fa-chevron-up"></i></button>
+</div>
+<script>
+  // Theme Toggle
+  const themeToggle = document.getElementById('theme-toggle');
+  const body = document.body;
+  themeToggle.addEventListener('click', () => {
+    body.classList.toggle('dark');
+    localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
+    themeToggle.textContent = body.classList.contains('dark') ? '☀️ Light Mode' : '🌙 Dark Mode';
+  });
+  if (localStorage.getItem('theme') === 'dark') {
+    body.classList.add('dark');
+    themeToggle.textContent = '☀️ Light Mode';
+  }
+  // Typed strings
+  const typedHero = document.getElementById('typed-hero');
+  const typedDesc = document.getElementById('typed-desc');
+  const heroTexts = ["Pratibha Sharma"];
+  const descTexts = [
+    "AI & Machine Learning Enthusiast",
+    "Passionate Problem Solver",
+    "Software Developer",
+    "Life-long Learner"
+  ];
+  function typeWriter(element, textArr, idx = 0, char = 0, delay = 80, cb) {
+    if (idx >= textArr.length) return;
+    if(char === 0) element.textContent = "";
+    if(char < textArr[idx].length) {
+      element.textContent += textArr[idx][char];
+      setTimeout(()=>typeWriter(element, textArr, idx, char+1, delay, cb), delay);
+    } else if(cb) setTimeout(()=>cb(idx+1), 900);
+  }
+  typeWriter(typedHero, heroTexts, 0,0,50);
+  function cycleDesc(i=0){
+    if(i >= descTexts.length) i=0;
+    let txt = descTexts[i]; typedDesc.textContent="";
+    typeWriter(typedDesc, [txt], 0,0,42,()=>cycleDesc(i+1));
+  }
+  setTimeout(()=>cycleDesc(0), 500);
+  // Active Nav Link and smooth scroll
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const sections = document.querySelectorAll('section');
+  navLinks.forEach(link=>{
+    link.addEventListener('click', function(e){
+      const hash = this.getAttribute('href');
+      if(hash.startsWith("#")) {
+        e.preventDefault();
+        document.querySelector(hash).scrollIntoView({behavior:'smooth'});
+      }
+    })
+  });
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (pageYOffset >= sectionTop - 150) {
+        current = section.getAttribute('id');
       }
     });
-  </script>
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === `#${current}`) {
+        link.classList.add('active');
+      }
+    });
+    // navbar effect
+    const navbar = document.getElementById('navbar');
+    if(window.scrollY > 10){
+      navbar.classList.add('scrolled');
+    }else{
+      navbar.classList.remove('scrolled');
+    }
+    // back-to-top button
+    const backBtn = document.getElementById('backTop');
+    if(window.scrollY > 300){
+      backBtn.classList.add('show');
+    }else{
+      backBtn.classList.remove('show');
+    }
+  });
+  // Project Filtering
+  const filterButtons = document.querySelectorAll('.project-filters button');
+  const projectCards = document.querySelectorAll('.project-card');
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+      const filter = button.getAttribute('data-filter');
+      projectCards.forEach(card => {
+        const cardTechs = card.getAttribute('data-tech');
+        if(filter === 'all' || cardTechs.includes(filter)) {
+          card.style.display = 'block';
+        }else{
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+  // Back to Top
+  document.getElementById('backTop').addEventListener('click',()=>{
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+</script>
 </body>
 </html>
