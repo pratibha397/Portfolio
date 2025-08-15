@@ -10,8 +10,6 @@ iii.Light/Dark mode switch
 
 iv.Project filtering and smooth navigation
 
-v.Downloadable resume
+v.Contact information and direct GitHub link
 
-vi.Contact information and direct GitHub link
-
-vii.Neat, single-file deployment (no frameworks or builds needed
+vi.Neat, single-file deployment (no frameworks or builds needed
